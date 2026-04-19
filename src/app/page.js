@@ -1,416 +1,343 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Link from 'next/link';
 import { 
-  BookOpen, 
-  MessageCircle, 
-  CheckCircle, 
-  Zap, 
-  Clock, 
-  Users, 
-  Atom, 
-  GraduationCap, 
-  MapPin, 
-  Mail,
-  ArrowRight,
-  Menu,
-  X,
-  Lightbulb,
-  FileText,
-  Calendar,
-  Youtube,
-  Search
+  Phone, MessageCircle, CheckCircle2, ShieldCheck, Clock, Users, Baby, 
+  Stethoscope, MapPin, Mail, ArrowRight, Heart, Microscope, Star,
+  Award, Activity
 } from 'lucide-react';
 
-/* --- REUSABLE COMPONENTS --- */
-
-const SectionHeading = ({ title, subtitle }) => (
-  <div className="text-center mb-12">
-    <h2 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-4">{title}</h2>
-    <div className="h-1.5 w-20 bg-indigo-500 mx-auto mb-4 rounded-full"></div>
-    {subtitle && <p className="text-slate-600 max-w-2xl mx-auto">{subtitle}</p>}
+/* ── FLOATING BUTTONS ── */
+const FloatingButtons = () => (
+  <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+    <a href="https://wa.me/917894820510" target="_blank" rel="noopener noreferrer"
+      className="w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300">
+      <MessageCircle className="w-6 h-6" />
+    </a>
+    <a href="tel:06746811111"
+      className="w-14 h-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300">
+      <Phone className="w-6 h-6" />
+    </a>
   </div>
 );
 
-const ButtonPrimary = ({ children, className = "", ...props }) => (
-  <button 
-    className={`bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-all transform hover:-translate-y-1 shadow-md ${className}`}
-    {...props}
-  >
-    {children}
-  </button>
-);
-
-const ButtonSecondary = ({ children, className = "", ...props }) => (
-  <button 
-    className={`bg-white hover:bg-indigo-50 text-indigo-600 border-2 border-indigo-600 font-semibold py-3 px-8 rounded-lg transition-all ${className}`}
-    {...props}
-  >
-    {children}
-  </button>
-);
-
-/* --- MAIN SECTIONS --- */
-
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const scrollToSection = (id) => {
-    setIsOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div 
-            className="flex items-center gap-2 cursor-pointer" 
-            onClick={() => scrollToSection('home')}
-        >
-            <div className="bg-indigo-600 p-2 rounded-lg">
-                <Atom className="text-white w-6 h-6" />
-            </div>
-            <div className="font-bold text-xl md:text-2xl text-slate-800 tracking-tight">
-                Prof <span className="text-indigo-600">SETU KUMAR THAKUR</span>
-            </div>
+/* ── HERO SECTION ── */
+const Hero = () => (
+  <section className="relative min-h-screen flex items-center pt-20" style={{background: 'linear-gradient(135deg, #F0FAF8 0%, #E8F5F1 50%, #F4E1D2 100%)'}}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16">
+      <div className="order-2 lg:order-1">
+        <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 text-teal-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <ShieldCheck className="w-4 h-4" />
+          NABH Accredited Hospital
         </div>
-        
-        <div className="hidden md:flex gap-8 font-medium text-slate-700">
-          <button onClick={() => scrollToSection('home')} className="hover:text-indigo-600 transition-colors">Home</button>
-          <button onClick={() => scrollToSection('about')} className="hover:text-indigo-600 transition-colors">Faculty Profile</button>
-          <button onClick={() => scrollToSection('courses')} className="hover:text-indigo-600 transition-colors">Courses</button>
-          <button onClick={() => scrollToSection('contact')} className="hover:text-indigo-600 transition-colors">Contact</button>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+          Advanced Women's Health <span className="text-teal-700">&amp; IVF Solutions</span>
+        </h1>
+        <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
+          Experience compassionate care combined with state-of-the-art fertility technology. We are dedicated to turning your dreams of parenthood into reality.
+        </p>
+        <div className="flex flex-wrap gap-4 mb-10">
+          <a href="#contact" 
+            className="bg-teal-700 text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+            Book Consultation <ArrowRight className="w-5 h-5" />
+          </a>
+          <a href="tel:06746811111"
+            className="border-2 border-teal-700 text-teal-700 px-8 py-4 rounded-full font-semibold text-base hover:bg-teal-50 transition-all flex items-center gap-2">
+            <Phone className="w-5 h-5" /> 0674 681 1111
+          </a>
         </div>
-
-        <button 
-            onClick={() => scrollToSection('contact')}
-            className="hidden md:block bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-        >
-            Enroll Now
-        </button>
-
-        <button className="md:hidden text-slate-700" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-8">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-teal-700">1600+</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wide">Happy Patients</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-teal-700">23+</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wide">Years Experience</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-teal-700">4.7★</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wide">Google Rating</div>
+          </div>
+        </div>
       </div>
-      
-      {isOpen && (
-        <div className="md:hidden bg-white border-t p-4 flex flex-col gap-4 shadow-xl animate-in fade-in slide-in-from-top-4">
-           <button onClick={() => scrollToSection('home')} className="text-left text-slate-700 py-2 border-b">Home</button>
-           <button onClick={() => scrollToSection('about')} className="text-left text-slate-700 py-2 border-b">About</button>
-           <button onClick={() => scrollToSection('courses')} className="text-left text-slate-700 py-2 border-b">Courses</button>
-           <button onClick={() => scrollToSection('contact')} className="bg-indigo-600 text-white w-full py-2 rounded-md mt-2 text-center">Get Started</button>
-        </div>
-      )}
-    </nav>
-  );
-};
 
-const Hero = () => {
-  const scrollToContact = () => {
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-  };
-
-  return (
-    <div id="home" className="relative bg-gradient-to-br from-slate-50 to-indigo-50 min-h-[600px] flex items-center py-16">
-      <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="order-2 lg:order-1">
-          <span className="inline-block py-1 px-4 rounded-full bg-indigo-100 text-indigo-700 text-lg font-bold mb-6 tracking-wide uppercase">
-             Mastering Physics for JEE & NEET
-          </span>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
-            Crack Competitive <br/>
-            <span className="text-indigo-600 underline decoration-indigo-200">Physics Exams</span>
-          </h1>
-          <p className="text-lg text-slate-600 mb-8 max-w-xl leading-relaxed">
-            Senior Physics Lecturer at ALLEN CARRER INSTITUTE <br />Join SETU KUMAR THAKUR's advanced physics coaching for JEE, NEET, and Academic Excellence with 16+ years of pedagogical experience.
-          </p>
-          <div className="flex flex-col sm:row gap-4">
-            <ButtonPrimary onClick={scrollToContact} className="flex items-center justify-center gap-2">
-               <BookOpen className="w-5 h-5" /> Browse Courses
-            </ButtonPrimary>
-            <ButtonSecondary onClick={scrollToContact} className="flex items-center justify-center gap-2">
-               <Youtube className="w-5 h-5" /> Free Masterclass
-            </ButtonSecondary>
-          </div>
-          <div className="mt-8 flex items-center gap-6">
-             <div className="flex -space-x-3">
-                {[1,2,3,4].map(i => <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-300 flex items-center justify-center text-[10px] font-bold">ST</div>)}
-             </div>
-             <p className="text-sm text-slate-500 font-medium italic">Join 500+ students already learning</p>
-          </div>
+      <div className="order-1 lg:order-2 relative">
+        <div className="absolute -inset-4 bg-teal-100 rounded-[3rem] opacity-50 blur-2xl"></div>
+        <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white/50">
+          <img src="/assets/hospital.png" alt="Ahana Gynaecare & IVF Building" className="w-full h-auto object-cover" />
         </div>
-        <div className="order-1 lg:order-2 relative">
-            <div className="absolute inset-0 bg-indigo-400 rounded-full filter blur-[100px] opacity-20 animate-pulse"></div>
-            <img 
-              src="/assets/PHOTO.jpeg" 
-              alt="Physics Lecture" 
-              className="relative z-10 w-full rounded-2xl shadow-2xl border-b-8 border-indigo-600"
-            />
+        <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3">
+          <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+            <Clock className="w-5 h-5 text-green-600" />
+          </div>
+          <div>
+            <div className="text-xs text-gray-500">24/7 Emergency</div>
+            <div className="text-sm font-bold text-gray-900">Always here for you</div>
+          </div>
         </div>
       </div>
     </div>
-  );
-};
+  </section>
+);
 
-const KeyFeatures = () => {
-  const features = [
-    { icon: <Zap className="w-8 h-8 text-indigo-600" />, title: "Concept Clarity", desc: "First-principles approach" },
-    { icon: <GraduationCap className="w-8 h-8 text-indigo-600" />, title: "JEE/NEET Focus", desc: "Targeted problem solving" },
-    { icon: <FileText className="w-8 h-8 text-indigo-600" />, title: "Digital Notes", desc: "Complete study material" },
-    { icon: <Search className="w-8 h-8 text-indigo-600" />, title: "Doubt Clearing", desc: "1-on-1 personalized help" },
+/* ── SERVICES ── */
+const services = [
+  { icon: <Microscope className="w-8 h-8" />, title: "IVF & Infertility", desc: "Advanced IVF, IUI, ICSI and complete fertility solutions with high success rates." },
+  { icon: <Baby className="w-8 h-8" />, title: "High Risk Pregnancy", desc: "Specialized care for high-risk pregnancies with 24/7 monitoring and expert management." },
+  { icon: <Heart className="w-8 h-8" />, title: "Normal Delivery", desc: "Safe, natural birthing experiences with skilled obstetricians and support staff." },
+  { icon: <Activity className="w-8 h-8" />, title: "Laparoscopy", desc: "Minimally invasive laparoscopic surgery for fibroids, cysts, endometriosis & more." },
+  { icon: <Stethoscope className="w-8 h-8" />, title: "PCOD / PCOS", desc: "Comprehensive hormonal and metabolic management for PCOD/PCOS patients." },
+  { icon: <ShieldCheck className="w-8 h-8" />, title: "Fetal Medicine", desc: "Advanced fetal anomaly scans, 4D ultrasound, and high-risk pregnancy monitoring." },
+];
+
+const Services = () => (
+  <section id="services" className="py-20 bg-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-14">
+        <span className="text-teal-600 font-semibold uppercase tracking-widest text-sm">What We Offer</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Our Specialties</h2>
+        <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+          Comprehensive women's healthcare services delivered with clinical excellence and compassionate care.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((s, i) => (
+          <div key={i} className="group p-8 rounded-2xl border border-gray-100 hover:border-teal-200 hover:shadow-xl transition-all duration-300 cursor-pointer bg-white hover:bg-teal-50/30">
+            <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-100 transition-colors">
+              {s.icon}
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">{s.title}</h3>
+            <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
+            <div className="text-teal-600 font-semibold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+              Learn More <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── INFRASTRUCTURE ── */
+const Infrastructure = () => (
+  <section id="infrastructure" className="py-20 bg-gray-50">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-14">
+        <span className="text-teal-600 font-semibold uppercase tracking-widest text-sm">World Class Facilities</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Our Infrastructure</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { img: '/assets/ivf_lab.png', title: 'Advanced IVF Lab', desc: 'State-of-the-art embryology lab with latest technology for optimal success rates.' },
+          { img: '/assets/maternity.png', title: 'Premium Maternity Suites', desc: 'Comfortable, private suites designed for a positive birthing experience.' },
+          { img: '/assets/laparoscopy.png', title: 'Laparoscopy Theatre', desc: 'Hi-definition laparoscopic equipment for precision minimally invasive surgeries.' },
+        ].map((item, i) => (
+          <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+            <div className="h-56 overflow-hidden">
+              <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+              <p className="text-gray-500 text-sm">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── DOCTOR PROFILE ── */
+const DoctorProfile = () => (
+  <section id="doctor" className="py-20 bg-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="relative">
+        <div className="absolute -top-8 -left-8 w-48 h-48 bg-teal-50 rounded-full -z-10"></div>
+        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pink-50 rounded-full -z-10"></div>
+        <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
+          <img src="/assets/doctor_final.png" alt="Dr. Sujit Kumar Behera" className="w-full h-auto object-cover" />
+        </div>
+      </div>
+
+      <div>
+        <span className="text-teal-600 font-semibold uppercase tracking-widest text-sm">Chief Specialist</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-2">Dr. Sujit Kumar Behera</h2>
+        <p className="text-teal-600 font-medium mb-6">MBBS, MS (Obs & Gynae) | Senior Consultant & Founder</p>
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          With over 23 years of expertise in Obstetrics & Gynaecology, Dr. Behera has transformed the lives of thousands of families. A pioneer in IVF and fertility treatments in Odisha, he combines technical mastery with genuine compassion for every patient.
+        </p>
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          {['23+ Years Experience', 'IVF Specialist', 'NABH Accredited', '1600+ Deliveries'].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 p-3 bg-teal-50 rounded-xl">
+              <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0" />
+              <span className="text-gray-700 font-medium text-sm">{item}</span>
+            </div>
+          ))}
+        </div>
+        <a href="#contact" className="inline-flex items-center gap-2 bg-teal-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-800 transition-all shadow-lg">
+          Book a Consultation <ArrowRight className="w-5 h-5" />
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── TEAM SECTION ── */
+const TeamSection = () => {
+  const team = [
+    { name: 'Dr. Swarnima Das', image: '/assets/dr_swarnima.png' },
+    { name: 'Dr. Sanjeev Behera', image: '/assets/dr_sanjeev.png' },
+    { name: 'Dr. Shweta Pani', image: '/assets/dr_shweta.png' },
   ];
-
   return (
-    <div className="bg-white py-16 border-b">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {features.map((feature, idx) => (
-            <div key={idx} className="group flex flex-col items-center text-center p-6 hover:bg-indigo-50 rounded-2xl transition-all">
-              <div className="mb-4 bg-white shadow-sm w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                {feature.icon}
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <span className="text-teal-600 font-semibold uppercase tracking-widest text-sm">Our Experts</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Meet Our Expert Team</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {team.map((doc, i) => (
+            <div key={i} className="group transition-all duration-500 hover:-translate-y-3">
+              <div className="relative bg-gray-50 rounded-[2.5rem] overflow-hidden h-[420px] flex items-center justify-center shadow-md hover:shadow-2xl transition-all">
+                <img src={doc.image} alt={doc.name} className="h-full w-full object-contain drop-shadow-xl" />
               </div>
-              <h3 className="font-bold text-lg text-slate-800">{feature.title}</h3>
-              <p className="text-slate-500 text-sm">{feature.desc}</p>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-const Services = () => {
-  const courses = [
-    { title: "Class XI Foundations", icon: <Atom className="w-6 h-6"/>, desc: "Mechanics, Thermodynamics, and Waves. Building the core pillars for engineering and medical entrance." },
-    { title: "Class XII Boards + Entrance", icon: <CheckCircle className="w-6 h-6"/>, desc: "Electromagnetism, Optics, and Modern Physics. Comprehensive coverage for Board and National exams." },
-    { title: "JEE/NEET Crash Course", icon: <Zap className="w-6 h-6"/>, desc: "Intensive 3-month program focusing on high-yield topics, shortcuts, and time management." },
-    { title: "Numerical Masterclass", icon: <Lightbulb className="w-6 h-6"/>, desc: "Special sessions dedicated to solving complex calculations and application-based physics problems." },
-    { title: "Personal Tutoring", icon: <Users className="w-6 h-6"/>, desc: "Individualized attention for students needing specialized support or fast-paced advancement." },
-    { title: "Laboratory Mentorship", icon: <Search className="w-6 h-6"/>, desc: "Guidance for practical exams and scientific research projects for higher secondary students." },
-  ];
-
-  return (
-    <div id="courses" className="py-20 bg-slate-50">
-      <div className="container mx-auto px-4">
-        <SectionHeading title="Learning Modules" subtitle="Structured curriculum designed to transform abstract theories into intuitive understanding." />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
-              <div className="bg-indigo-50 text-indigo-600 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">{item.title}</h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">{item.desc}</p>
-              <div className="text-indigo-600 font-semibold text-sm flex items-center gap-1 cursor-pointer">
-                View Syllabus <ArrowRight className="w-4 h-4" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AboutDoctor = () => {
-  return (
-    <div id="about" className="py-20 bg-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-1/2 relative">
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-50 rounded-full -z-10 animate-pulse"></div>
-            <img 
-                src="assets/PHOTO.jpeg" 
-                alt="Prof. SETU KUMAR THAKUR" 
-                className="w-full rounded-2xl shadow-2xl relative z-10"
-            />
-          </div>
-          <div className="lg:w-1/2">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Meet Your Instructor
-            </h2>
-            <h3 className="text-indigo-600 font-bold text-xl mb-6 flex items-center gap-2">
-                <GraduationCap /> PhD in Theoretical Physics | Assistant Professor
-            </h3>
-            
-            <p className="text-slate-600 mb-6 leading-relaxed text-lg">
-              Myself Prof. SETU KUMAR THAKUR an experienced Lecturer with 9+ years of teaching experience. Currently serving as a <strong>SENIOR LECTURER</strong> at <strong>ALLEN CARRER  INSTITUTE</strong>, specializing in <strong>NEET, JEE & OTHER COMPETITIVE EXAMINATIONS.</strong>
-            </p>
-            <p className="text-slate-600 mb-8 leading-relaxed">
-              His teaching philosophy centers on "Visualization before Mathematics." By helping students visualize physical phenomena, she makes complex equations intuitive. She has successfully mentored hundreds of students into top IITs and Medical Colleges across India.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                {[
-                    "9+ Years Academic Experience",
-                    "Author of Physics Prep Guides",
-                    "Ex-Senior Faculty (National Institute)",
-                    "Researcher in Astrophysics"
-                ].map((text, i) => (
-                    <div key={i} className="flex items-center p-3 bg-slate-50 rounded-lg">
-                        <CheckCircle className="text-indigo-500 mr-2 w-5 h-5" />
-                        <span className="text-slate-700 font-medium">{text}</span>
-                    </div>
-                ))}
-            </div>
-
-            <ButtonPrimary onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-                Book a Free Demo Class
-            </ButtonPrimary>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ClinicInfo = () => {
-    return (
-      <div id="contact" className="py-20 bg-slate-900 text-white rounded-t-[3rem] md:rounded-t-[5rem]">
-        <div className="container mx-auto px-4">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-               <div>
-                   <h2 className="text-4xl font-bold mb-6">Start Your Journey</h2>
-                   <p className="text-slate-400 mb-10 text-lg">
-                       Visit our learning center for offline classes or join our hybrid digital classroom from anywhere in the country.
-                   </p>
-                   
-                   <div className="space-y-8">
-                        <div className="flex items-start">
-                            <div className="bg-slate-800 p-3 rounded-lg mr-4">
-                                <MapPin className="w-6 h-6 text-indigo-400" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-white">The Physics Lab</h4>
-                                <p className="text-slate-400">Prachi Enclave, Rail Vihar,<br/>Chandrasekharpur, Bhubaneswar, 751016</p>
-                            </div>
-                        </div>
-                        
-                        <div className="flex items-start">
-                            <div className="bg-slate-800 p-3 rounded-lg mr-4">
-                                <Clock className="w-6 h-6 text-indigo-400" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-white">Batch Timings</h4>
-                                <p className="text-slate-400">Weekday Evenings: 5:00 PM - 8:30 PM</p>
-                                <p className="text-slate-400">Weekend Intensives: 10:00 AM - 4:00 PM</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start">
-                            <div className="bg-slate-800 p-3 rounded-lg mr-4">
-                                <Mail className="w-6 h-6 text-indigo-400" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-white">Admissions</h4>
-                                <p className="text-slate-400">+91 70082 88862</p>
-                                <p className="text-slate-400 font-mono">contact@physicswithdebashree.edu</p>
-                            </div>
-                        </div>
-                   </div>
-               </div>
-               
-               <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl">
-                   <h3 className="text-2xl font-bold mb-6 text-center">Inquiry Form</h3>
-                   <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                        <input type="text" placeholder="Student Name" className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-indigo-500 outline-none" />
-                        <input type="email" placeholder="Email Address" className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-indigo-500 outline-none" />
-                        <select className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-indigo-500 outline-none">
-                            <option>Select Grade</option>
-                            <option>Class XI</option>
-                            <option>Class XII</option>
-                            <option>JEE/NEET Aspirant</option>
-                        </select>
-                        <textarea placeholder="Any specific requirements?" rows="3" className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:border-indigo-500 outline-none"></textarea>
-                        <button className="w-full bg-indigo-600 py-3 rounded-lg font-bold hover:bg-indigo-500 transition-colors">Request Callback</button>
-                   </form>
-               </div>
-           </div>
-        </div>
-      </div>
-    );
-};
-
+/* ── TESTIMONIALS ── */
 const Testimonials = () => {
+  const reviews = [
+    { text: "Dr. Behera and his team are exceptional. After 3 years of struggle, we finally have our baby. Forever grateful!", name: "Priya Mohanty", role: "IVF Patient", rating: 5 },
+    { text: "The entire staff is so caring and professional. My delivery was smooth and I felt safe throughout.", name: "Saswati Das", role: "Maternity Patient", rating: 5 },
+    { text: "Best gynaecology hospital in Bhubaneswar. The infrastructure and care level is truly world-class.", name: "Reena Patra", role: "PCOS Patient", rating: 5 },
+  ];
   return (
-    <div className="py-20 bg-indigo-50/50">
-      <div className="container mx-auto px-4">
-        <SectionHeading title="Success Stories" subtitle="Join the ranks of students who transformed their fear of physics into their highest-scoring subject." />
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <span className="text-teal-600 font-semibold uppercase tracking-widest text-sm">Patient Stories</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">What Our Patients Say</h2>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { text: "Her method of explaining Gauss's Law was eye-opening. I never had to memorize another formula again.", author: "Aryan Sharma", role: "IIT Delhi '24" },
-            { text: "The crash course helped me jump from 40 to 95 percentile in JEE Mains Physics in just 2 months!", author: "Ipsita Patra", role: "NEET Rank 452" },
-            { text: "Best teacher in Bhubaneswar. The numerical problem-solving sessions are exceptionally well-structured.", author: "Siddharth B.", role: "CBSE XII (98/100)" },
-          ].map((t, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative border border-slate-100">
-              <p className="text-slate-700 italic mb-6">"{t.text}"</p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold">
-                  {t.author[0]}
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-slate-900">{t.author}</p>
-                  <p className="text-sm text-indigo-500 font-medium">{t.role}</p>
+          {reviews.map((r, i) => (
+            <div key={i} className="bg-gray-50 rounded-2xl p-8 hover:shadow-xl transition-all border border-gray-100">
+              <div className="flex gap-1 mb-4">
+                {Array.from({length: r.rating}).map((_, j) => <Star key={j} className="w-4 h-4 text-yellow-400 fill-yellow-400" />)}
+              </div>
+              <p className="text-gray-600 italic mb-6 text-sm leading-relaxed">"{r.text}"</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 font-bold text-sm">{r.name[0]}</div>
+                <div>
+                  <div className="font-bold text-gray-900 text-sm">{r.name}</div>
+                  <div className="text-teal-600 text-xs font-medium">{r.role}</div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="bg-white border-t border-slate-200 pt-16 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-            <div className="text-center md:text-left">
-                <div className="font-bold text-2xl text-slate-800 mb-2">Prof. SETU KUMAR <span className="text-indigo-600">THAKUR</span></div>
-                <p className="text-sm text-slate-500 font-medium">Empowering students through the lens of Physics.</p>
+/* ── CONTACT SECTION ── */
+const Contact = () => (
+  <section id="contact" className="py-20 bg-teal-900 text-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <span className="text-teal-300 font-semibold uppercase tracking-widest text-sm">Get In Touch</span>
+        <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-6">Book an Appointment</h2>
+        <p className="text-teal-100 mb-8 leading-relaxed">Our team is here to help you 24/7. Reach out to schedule a consultation with our expert specialists.</p>
+        <div className="space-y-5">
+          <div className="flex items-start gap-4">
+            <div className="w-11 h-11 bg-teal-800 rounded-xl flex items-center justify-center shrink-0">
+              <MapPin className="w-5 h-5 text-teal-300" />
             </div>
-            
-            <div className="flex gap-4">
-                <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white cursor-pointer transition-all">
-                    <Youtube className="w-5 h-5"/>
-                </div>
-                <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white cursor-pointer transition-all">
-                    <MessageCircle className="w-5 h-5"/>
-                </div>
-                <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white cursor-pointer transition-all">
-                    <Mail className="w-5 h-5"/>
-                </div>
+            <div>
+              <div className="font-semibold mb-1">Our Location</div>
+              <div className="text-teal-200 text-sm">Plot No. 119, District Center, Chandrasekharpur, Bhubaneswar - 751016</div>
             </div>
-        </div>
-        
-        <div className="border-t border-slate-100 pt-8 text-center">
-            <p className="text-slate-400 text-xs tracking-widest uppercase">
-                &copy; 2025 Education Portal | Physics with SETU KUMAR THAKUR. All rights reserved.
-            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 bg-teal-800 rounded-xl flex items-center justify-center shrink-0">
+              <Phone className="w-5 h-5 text-teal-300" />
+            </div>
+            <div>
+              <div className="font-semibold mb-1">Call Us</div>
+              <div className="text-teal-200 text-sm">0674 681 1111 | +91 78948 20510 (IVF)</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 bg-teal-800 rounded-xl flex items-center justify-center shrink-0">
+              <Mail className="w-5 h-5 text-teal-300" />
+            </div>
+            <div>
+              <div className="font-semibold mb-1">Email</div>
+              <div className="text-teal-200 text-sm">ahanagynaecare@gmail.com</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 bg-teal-800 rounded-xl flex items-center justify-center shrink-0">
+              <Clock className="w-5 h-5 text-teal-300" />
+            </div>
+            <div>
+              <div className="font-semibold mb-1">Timings</div>
+              <div className="text-teal-200 text-sm">Mon–Sat: 9:00 AM – 8:00 PM | 24/7 Emergency</div>
+            </div>
+          </div>
         </div>
       </div>
-    </footer>
-  );
-};
 
-const HomePage = () => {
+      <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+        <h3 className="text-xl font-bold mb-6">Send Us a Message</h3>
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <input type="text" placeholder="Your Name" className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-teal-300 focus:outline-none focus:border-teal-400 text-sm" />
+          <input type="tel" placeholder="Phone Number" className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-teal-300 focus:outline-none focus:border-teal-400 text-sm" />
+          <input type="email" placeholder="Email Address" className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-teal-300 focus:outline-none focus:border-teal-400 text-sm" />
+          <select className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-teal-100 focus:outline-none focus:border-teal-400 text-sm">
+            <option value="">Select Service</option>
+            <option>IVF & Infertility</option>
+            <option>High Risk Pregnancy</option>
+            <option>Normal Delivery</option>
+            <option>Laparoscopy</option>
+            <option>PCOD/PCOS</option>
+            <option>Fetal Medicine</option>
+            <option>General Gynaecology</option>
+          </select>
+          <textarea placeholder="Your Message" rows={4} className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-teal-300 focus:outline-none focus:border-teal-400 text-sm resize-none"></textarea>
+          <button className="w-full bg-white text-teal-900 py-4 rounded-xl font-bold hover:bg-teal-50 transition-all text-sm shadow-lg">
+            Send Request →
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── MAIN PAGE ── */
+export default function HomePage() {
   return (
-    <div className="min-h-screen font-sans text-slate-800 bg-white">
+    <div className="min-h-screen">
       <Navbar />
       <Hero />
-      <KeyFeatures />
-      <AboutDoctor />
       <Services />
-      <ClinicInfo />
+      <Infrastructure />
+      <DoctorProfile />
+      <TeamSection />
       <Testimonials />
+      <Contact />
       <Footer />
+      <FloatingButtons />
     </div>
   );
-};
-
-export default HomePage;
+}
