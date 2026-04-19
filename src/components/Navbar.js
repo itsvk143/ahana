@@ -30,17 +30,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="relative w-14 h-14 overflow-hidden">
+        <Link href="/" className="flex items-center">
+          <div className="relative w-16 h-16 overflow-hidden">
             <img 
               src="/assets/logo_final.png" 
               alt="Ahana Gynaecare & IVF Logo" 
               className="w-full h-full object-contain"
             />
-          </div>
-          <div className="flex flex-col leading-tight hidden sm:block">
-            <span className="font-bold text-lg text-teal-800">Ahana Gynaecare</span>
-            <span className="text-xs text-teal-600 font-medium">& IVF</span>
           </div>
         </Link>
 
