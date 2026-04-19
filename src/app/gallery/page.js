@@ -83,17 +83,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* FB Token Notice */}
-      {!isFbToken && !initialLoading && (
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="bg-amber-50 border border-amber-200 text-amber-800 px-6 py-3 rounded-xl text-sm flex items-center gap-3">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            Showing local photos. To display live Facebook photos, add your{' '}
-            <code className="bg-amber-100 px-2 py-0.5 rounded font-mono">FACEBOOK_PAGE_ACCESS_TOKEN</code>{' '}
-            in <code className="bg-amber-100 px-2 py-0.5 rounded font-mono">.env.local</code>.
-          </div>
-        </div>
-      )}
+
 
       {/* Gallery Grid */}
       <section className="py-12">
