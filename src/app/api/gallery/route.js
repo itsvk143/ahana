@@ -47,7 +47,7 @@ export async function GET(request) {
 
 function getFallbackPhotos() {
   const gallery = [];
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 9; i++) {
     gallery.push({
       id: `local-${i}`,
       url: `/assets/gallery/photo${i}.jpg`,
